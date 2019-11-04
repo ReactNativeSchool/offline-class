@@ -1,11 +1,19 @@
 import React from "react";
-import { View, StyleSheet, SafeAreaView, Text, ScrollView, Dimensions, InteractionManager } from "react-native";
-import MapView, { Marker } from 'react-native-maps';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  ScrollView,
+  Dimensions,
+  InteractionManager
+} from "react-native";
+import MapView, { Marker } from "react-native-maps";
 
 import { Button } from "../components/Button";
-import { geoFetch } from '../util/api';
+import { geoFetch } from "../util/api";
 
-const screen = Dimensions.get('window');
+const screen = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -41,7 +49,7 @@ const styles = StyleSheet.create({
     borderTopColor: "#E4E4E4",
     borderBottomWidth: 1,
     borderBottomColor: "#E4E4E4",
-    backgroundColor: '#fff'
+    backgroundColor: "#fff"
   }
 });
 
@@ -54,23 +62,23 @@ class Details extends React.Component {
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
-      this.setState({ showMap: true })
-    })
+      this.setState({ showMap: true });
+    });
   }
 
-  handleLogPress = (_id) => {
+  handleLogPress = _id => {
     this.setState({ loading: true }, () => {
-      geoFetch(`/geocache/log-find?_id=${_id}`, { method: 'PUT' })
+      geoFetch(`/log-find?_id=${_id}`, { method: "PUT" })
         .then(res => {
-          this.setState({ updatedItem: res.result })
+          this.setState({ updatedItem: res.result });
         })
         .catch(error => {
-          console.log('log press error', error);
+          console.log("log press error", error);
         })
         .finally(() => {
-          this.setState({ loading: false })
-        })
-    })
+          this.setState({ loading: false });
+        });
+    });
   };
 
   render() {
@@ -93,9 +101,16 @@ class Details extends React.Component {
               zoomEnabled={false}
               scrollEnabled={false}
             >
-              <Marker coordinate={{ latitude: item.latitude, longitude: item.longitude }} />
+              <Marker
+                coordinate={{
+                  latitude: item.latitude,
+                  longitude: item.longitude
+                }}
+              />
             </MapView>
-          ) : <View style={styles.map} />}
+          ) : (
+            <View style={styles.map} />
+          )}
           <View style={styles.section}>
             <Text style={styles.titleText}>{item.title}</Text>
             <Text style={styles.text}>{item.description}</Text>
