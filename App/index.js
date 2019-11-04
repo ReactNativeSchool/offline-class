@@ -4,9 +4,9 @@ import { createAppContainer, createStackNavigator } from "react-navigation";
 
 import List from "./screens/List";
 import Details from "./screens/Details";
-import CreateCache from './screens/CreateCache';
+import CreateCache from "./screens/CreateCache";
 
-import { AddButton, CloseButton } from "./components/Navigation";
+import { AddButton, CloseButton, NetworkStatus } from "./components/Navigation";
 
 const defaultStackOptions = {
   headerStyle: {
@@ -21,7 +21,8 @@ const Information = createStackNavigator(
       screen: List,
       navigationOptions: ({ navigation }) => ({
         headerTitle: "Caches",
-        headerRight: <AddButton navigation={navigation} />
+        headerRight: <AddButton navigation={navigation} />,
+        headerLeft: <NetworkStatus />
       })
     },
     Details: {
@@ -38,27 +39,33 @@ const Information = createStackNavigator(
   }
 );
 
-const App = createStackNavigator({
-  Information,
-  CreateCache: {
-    screen: createStackNavigator({
-      CreateCreate: {
-        screen: CreateCache,
-        navigationOptions: ({ navigation }) => ({
-          headerTitle: "Create Cache",
-          headerRight: <CloseButton navigation={navigation} />
-        })
-      }
-    }, {
-      defaultNavigationOptions: {
-        ...defaultStackOptions,
-      }
-    })
+const App = createStackNavigator(
+  {
+    Information,
+    CreateCache: {
+      screen: createStackNavigator(
+        {
+          CreateCreate: {
+            screen: CreateCache,
+            navigationOptions: ({ navigation }) => ({
+              headerTitle: "Create Cache",
+              headerRight: <CloseButton navigation={navigation} />
+            })
+          }
+        },
+        {
+          defaultNavigationOptions: {
+            ...defaultStackOptions
+          }
+        }
+      )
+    }
+  },
+  {
+    headerMode: "none",
+    mode: "modal"
   }
-}, {
-  headerMode: 'none',
-  mode: 'modal'
-})
+);
 
 const AppWithContainer = createAppContainer(App);
 
