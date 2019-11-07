@@ -4,7 +4,7 @@ import { createAppContainer, createStackNavigator } from "react-navigation";
 
 import List from "./screens/List";
 import Details from "./screens/Details";
-import CreateCache from "./screens/CreateCache";
+import CreateItem from "./screens/CreateItem";
 
 import { AddButton, CloseButton, NetworkStatus } from "./components/Navigation";
 
@@ -20,7 +20,7 @@ const Information = createStackNavigator(
     List: {
       screen: List,
       navigationOptions: ({ navigation }) => ({
-        headerTitle: "Caches",
+        headerTitle: "Items",
         headerRight: <AddButton navigation={navigation} />,
         headerLeft: <NetworkStatus />
       })
@@ -42,13 +42,13 @@ const Information = createStackNavigator(
 const App = createStackNavigator(
   {
     Information,
-    CreateCache: {
+    CreateItem: {
       screen: createStackNavigator(
         {
           CreateCreate: {
-            screen: CreateCache,
+            screen: CreateItem,
             navigationOptions: ({ navigation }) => ({
-              headerTitle: "Create Cache",
+              headerTitle: "Create Item",
               headerRight: <CloseButton navigation={navigation} />
             })
           }

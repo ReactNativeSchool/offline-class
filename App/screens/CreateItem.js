@@ -5,7 +5,7 @@ import { TextField } from "../components/Form";
 import { Button } from "../components/Button";
 import { geoFetch } from "../util/api";
 
-class CreateCache extends React.Component {
+class CreateItem extends React.Component {
   state = {
     title: null,
     description: null,
@@ -39,7 +39,7 @@ class CreateCache extends React.Component {
           this.props.navigation.popToTop();
         })
         .catch(error => {
-          console.log("create cache error", error);
+          console.log("create item error", error);
         })
         .finally(() => {
           this.setState({ loading: false });
@@ -93,4 +93,4 @@ class CreateCache extends React.Component {
   }
 }
 
-export default CreateCache;
+export default CreateItem;

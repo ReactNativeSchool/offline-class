@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 
 export const AddButton = ({ navigation }) => (
   <TouchableOpacity
-    onPress={() => navigation.navigate("CreateCache")}
+    onPress={() => navigation.navigate("CreateItem")}
     style={styles.btnRight}
     activeOpacity={0.75}
   >

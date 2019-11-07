@@ -7,21 +7,31 @@ import { geoFetch } from "../util/api";
 class ListScreen extends React.Component {
   state = {
     loading: true,
-    list: []
+    list: [],
+    refreshing: false
   };
 
   componentDidMount() {
+    this.getData();
+  }
+
+  getData = () =>
     geoFetch("/list")
       .then(response => {
         this.setState({
           loading: false,
+          refreshing: false,
           list: response.result
         });
       })
       .catch(error => {
         console.log("list error", error);
       });
-  }
+
+  handleRefresh = () => {
+    this.setState({ refreshing: true });
+    this.getData();
+  };
 
   render() {
     if (this.state.loading) {
@@ -38,6 +48,8 @@ class ListScreen extends React.Component {
             onPress={() => this.props.navigation.navigate("Details", { item })}
           />
         )}
+        onRefresh={this.handleRefresh}
+        refreshing={this.state.refreshing}
       />
     );
   }
