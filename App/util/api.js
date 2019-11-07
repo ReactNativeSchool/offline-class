@@ -1,5 +1,3 @@
-// import NetInfo from '@react-native-community/netinfo';
-
 const BASE_URL = "https://rns-offline-class.glitch.me";
 
 export const geoFetch = (path, options = {}) =>

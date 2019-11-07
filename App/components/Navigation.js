@@ -1,7 +1,6 @@
 import React from "react";
 import { TouchableOpacity, Platform, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useConnectionStatus } from "../util/network";
 
 const iconPrefix = Platform.OS === "ios" ? "ios" : "md";
 
@@ -33,21 +32,3 @@ export const CloseButton = ({ navigation }) => (
     <Ionicons name={`${iconPrefix}-close`} size={30} color="#fff" />
   </TouchableOpacity>
 );
-
-export const NetworkStatus = () => {
-  const { isConnected } = useConnectionStatus();
-  console.log("netInfo", isConnected);
-  if (isConnected) {
-    return null;
-  }
-
-  return (
-    <TouchableOpacity
-      onPress={() => alert("You don't currently have a network connection.")}
-      style={styles.btnLeft}
-      activeOpacity={0.75}
-    >
-      <Ionicons name={`${iconPrefix}-warning`} size={30} color="#fff" />
-    </TouchableOpacity>
-  );
-};

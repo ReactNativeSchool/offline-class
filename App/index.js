@@ -6,7 +6,7 @@ import List from "./screens/List";
 import Details from "./screens/Details";
 import CreateItem from "./screens/CreateItem";
 
-import { AddButton, CloseButton, NetworkStatus } from "./components/Navigation";
+import { AddButton, CloseButton } from "./components/Navigation";
 
 const defaultStackOptions = {
   headerStyle: {
@@ -21,8 +21,7 @@ const Information = createStackNavigator(
       screen: List,
       navigationOptions: ({ navigation }) => ({
         headerTitle: "Items",
-        headerRight: <AddButton navigation={navigation} />,
-        headerLeft: <NetworkStatus />
+        headerRight: <AddButton navigation={navigation} />
       })
     },
     Details: {
