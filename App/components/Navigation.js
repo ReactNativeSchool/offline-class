@@ -1,6 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Platform, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNetInfo } from "@react-native-community/netinfo";
 
 const iconPrefix = Platform.OS === "ios" ? "ios" : "md";
 
@@ -32,3 +33,21 @@ export const CloseButton = ({ navigation }) => (
     <Ionicons name={`${iconPrefix}-close`} size={30} color="#fff" />
   </TouchableOpacity>
 );
+
+export const OfflineNotification = () => {
+  const networkState = useNetInfo();
+
+  if (networkState.isConnected) {
+    return null;
+  }
+
+  return (
+    <TouchableOpacity
+      onPress={() => alert("You're currently offline.")}
+      style={styles.btnLeft}
+      activeOpacity={0.75}
+    >
+      <Ionicons name={`${iconPrefix}-warning`} size={30} color="#fff" />
+    </TouchableOpacity>
+  );
+};

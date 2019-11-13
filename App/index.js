@@ -7,13 +7,18 @@ import List from "./screens/List";
 import Details from "./screens/Details";
 import CreateItem from "./screens/CreateItem";
 
-import { AddButton, CloseButton } from "./components/Navigation";
+import {
+  AddButton,
+  CloseButton,
+  OfflineNotification
+} from "./components/Navigation";
 
 const defaultStackOptions = {
   headerStyle: {
     backgroundColor: "#3A8552"
   },
-  headerTintColor: "#fff"
+  headerTintColor: "#fff",
+  headerLeft: <OfflineNotification />
 };
 
 const Information = createStackNavigator(
