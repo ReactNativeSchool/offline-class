@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, Alert } from "react-native";
 
 import { TextField } from "../components/Form";
 import { Button } from "../components/Button";
@@ -40,6 +40,7 @@ class CreateItem extends React.Component {
         })
         .catch(error => {
           console.log("create item error", error);
+          Alert.alert("Sorry, something went wrong.", error.message);
         })
         .finally(() => {
           this.setState({ loading: false });

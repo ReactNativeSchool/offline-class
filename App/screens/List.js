@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Alert } from "react-native";
 
 import { List, ListItem } from "../components/List";
 import { geoFetch } from "../util/api";
@@ -26,6 +26,16 @@ class ListScreen extends React.Component {
       })
       .catch(error => {
         console.log("list error", error);
+        Alert.alert(
+          "Sorry, something went wrong. Please try again",
+          error.message,
+          [
+            {
+              text: "Try Again",
+              onPress: this.getData
+            }
+          ]
+        );
       });
 
   handleRefresh = () => {
