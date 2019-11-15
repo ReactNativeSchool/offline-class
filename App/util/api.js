@@ -3,7 +3,7 @@ import NetInfo from "@react-native-community/netinfo";
 
 const BASE_URL = "https://rns-offline-class.glitch.me";
 
-export const geoFetch = async (path, options = {}) => {
+export const geoFetch = async (path, options = {}, optimisticResponse = {}) => {
   const url = `${BASE_URL}/api${path}`;
   const cacheKey = `CACHED_DATA::${url}`;
   const actionQueueKey = "CACHED_DATA::ACTION_QUEUE";
@@ -57,6 +57,8 @@ export const geoFetch = async (path, options = {}) => {
 
         const _queuedActions2 = await AsyncStorage.getItem(actionQueueKey);
         console.log("after queued actions", _queuedActions2);
+
+        return optimisticResponse;
       }
     }
 
