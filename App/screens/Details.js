@@ -59,26 +59,13 @@ class Details extends React.Component {
   state = {
     loading: false,
     updatedItem: null,
-    showMap: false,
-    offline: false
+    showMap: false
   };
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
       this.setState({ showMap: true });
     });
-
-    this.netListenerUnsubscribe = NetInfo.addEventListener(networkState => {
-      this.setState({
-        offline: !networkState.isConnected
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    if (this.netListenerUnsubscribe) {
-      this.netListenerUnsubscribe();
-    }
   }
 
   handleLogPress = _id => {
@@ -136,7 +123,7 @@ class Details extends React.Component {
             <Button
               text="Log"
               onPress={() => this.handleLogPress(item._id)}
-              loading={this.state.loading || this.state.offline}
+              loading={this.state.loading}
             />
           </View>
         </ScrollView>
