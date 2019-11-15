@@ -3,6 +3,7 @@ module.exports = {
   rules: {
     "react/jsx-props-no-spreading": 0,
     "react/jsx-fragments": 0,
-    "react/state-in-constructor": 0
+    "react/state-in-constructor": 0,
+    "no-await-in-loop": 0
   }
 };

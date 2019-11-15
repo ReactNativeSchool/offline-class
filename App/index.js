@@ -12,6 +12,7 @@ import {
   CloseButton,
   OfflineNotification
 } from "./components/Navigation";
+import { reconcileActions } from "./util/api";
 
 const defaultStackOptions = {
   headerStyle: {
@@ -74,9 +75,31 @@ const App = createStackNavigator(
 
 const AppWithContainer = createAppContainer(App);
 
-export default () => (
-  <React.Fragment>
-    <StatusBar barStyle="light-content" />
-    <AppWithContainer />
-  </React.Fragment>
-);
+export default class RootApp extends React.Component {
+  state = {
+    reconciling: true
+  };
+
+  componentDidMount() {
+    reconcileActions()
+      .then(reconciled => {
+        console.log(`Have offline actions been reconciled? ${reconciled}`);
+      })
+      .finally(() => {
+        this.setState({ reconciling: false });
+      });
+  }
+
+  render() {
+    if (this.state.reconciling) {
+      return null;
+    }
+
+    return (
+      <React.Fragment>
+        <StatusBar barStyle="light-content" />
+        <AppWithContainer />
+      </React.Fragment>
+    );
+  }
+}
