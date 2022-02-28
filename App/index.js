@@ -7,7 +7,11 @@ import List from "./screens/List";
 import Details from "./screens/Details";
 import CreateItem from "./screens/CreateItem";
 
-import { AddButton, CloseButton } from "./components/Navigation";
+import {
+  AddButton,
+  CloseButton,
+  OfflineNotification,
+} from "./components/Navigation";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +25,7 @@ export default () => (
             backgroundColor: "#3A8552",
           },
           headerTintColor: "#fff",
+          headerLeft: OfflineNotification,
         }}
       >
         <Stack.Screen
