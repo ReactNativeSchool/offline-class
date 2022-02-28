@@ -30,13 +30,24 @@ export const geoFetch = async (path, options = {}) => {
         options.method.toLowerCase() === "post"
       ) {
         const _queueActions = await AsyncStorage.getItem(actionQueueKey);
-        const queuedActions = _queueActions ? JSON.parse(_queueActions) : [];
+        let queuedActions = _queueActions ? JSON.parse(_queueActions) : [];
 
         console.log("initial queuedActions", queuedActions);
 
         queuedActions.push({
           path,
           options,
+        });
+
+        const data = {};
+        queuedActions.forEach((action) => {
+          data[action.path] = action.options;
+        });
+        queuedActions = Object.keys(data).map((key) => {
+          return {
+            path: key,
+            options: data[key],
+          };
         });
 
         await AsyncStorage.setItem(
