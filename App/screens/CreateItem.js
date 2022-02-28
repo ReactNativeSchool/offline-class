@@ -1,9 +1,23 @@
 import React from "react";
-import { ScrollView, View, Alert } from "react-native";
+import { ScrollView, View, Alert, StyleSheet, Text } from "react-native";
+import NetInfo from "@react-native-community/netinfo";
+import { Ionicons } from "@expo/vector-icons";
 
 import { TextField } from "../components/Form";
 import { Button } from "../components/Button";
 import { geoFetch } from "../util/api";
+
+const styles = StyleSheet.create({
+  offlineContainer: {
+    alignItems: "center",
+    marginTop: 40,
+  },
+  offlineText: {
+    color: "rgba(0, 0, 0, 0.5)",
+    fontSize: 18,
+    textAlign: "center",
+  },
+});
 
 class CreateItem extends React.Component {
   state = {
@@ -12,7 +26,22 @@ class CreateItem extends React.Component {
     latitude: null,
     longitude: null,
     loading: false,
+    offline: false,
   };
+
+  componentDidMount() {
+    this.netListenerUnsubscribe = NetInfo.addEventListener((networkState) => {
+      this.setState({
+        offline: !networkState.isConnected,
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    if (this.netListenerUnsubscribe) {
+      this.netListenerUnsubscribe();
+    }
+  }
 
   onCurrentLocationPress = () => {
     navigator.geolocation.getCurrentPosition((res) => {
@@ -49,6 +78,16 @@ class CreateItem extends React.Component {
   };
 
   render() {
+    if (this.state.offline) {
+      return (
+        <View style={styles.offlineContainer}>
+          <Ionicons name="ios-warning" size={90} color="rgba(0, 0, 0, 0.5)" />
+          <Text style={styles.offlineText}>
+            Sorry, you can't create new items when offline.
+          </Text>
+        </View>
+      );
+    }
     return (
       <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
         <TextField
@@ -93,5 +132,4 @@ class CreateItem extends React.Component {
     );
   }
 }
-
 export default CreateItem;
