@@ -7,6 +7,7 @@ import {
   ScrollView,
   Dimensions,
   InteractionManager,
+  Alert,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
@@ -74,6 +75,7 @@ class Details extends React.Component {
         })
         .catch((error) => {
           console.log("log press error", error);
+          Alert.alert("Sorry, something went wrong.", error.message);
         })
         .finally(() => {
           this.setState({ loading: false });
