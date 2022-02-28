@@ -1,5 +1,6 @@
 import React from "react";
 import { ActivityIndicator, Alert } from "react-native";
+import NetInfo from "@react-native-community/netinfo";
 
 import { List, ListItem } from "../components/List";
 import { geoFetch } from "../util/api";
@@ -16,7 +17,14 @@ class ListScreen extends React.Component {
   }
 
   getData = () =>
-    geoFetch("/list")
+    NetInfo.fetch()
+      .then((state) => {
+        if (!state.isConnected) {
+          throw new Error("Currently offline.");
+        }
+
+        return geoFetch("/list");
+      })
       .then((response) => {
         this.setState({
           loading: false,
