@@ -68,9 +68,18 @@ class Details extends React.Component {
   }
 
   handleLogPress = (_id) => {
+    const item = this.props?.route?.params?.item || {};
+    const optimisticResponse = {
+      result: {
+        ...item,
+        foundCount: item.foundCount ? item.foundCount + 1 : 1,
+      },
+    };
+
     this.setState({ loading: true }, () => {
-      geoFetch(`/log-find?_id=${_id}`, { method: "PUT" })
+      geoFetch(`/log-find?_id=${_id}`, { method: "PUT" }, optimisticResponse)
         .then((res) => {
+          console.log("res", res);
           this.setState({ updatedItem: res.result });
         })
         .catch((error) => {
