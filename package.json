@@ -1,4 +1,6 @@
 {
+  "name": "offlineclass",
+  "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -9,20 +11,22 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-community/masked-view": "0.1.10",
-    "expo": "^39.0.0",
-    "react": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
-    "react-native-gesture-handler": "~1.7.0",
-    "react-native-maps": "0.27.1",
-    "react-native-reanimated": "~1.13.0",
-    "react-native-safe-area-context": "3.1.4",
-    "react-native-screens": "~2.10.1",
-    "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^1.10.3"
+    "@react-native-async-storage/async-storage": "~1.15.0",
+    "@react-native-community/netinfo": "7.1.3",
+    "@react-navigation/native": "^6.0.8",
+    "@react-navigation/native-stack": "^6.5.0",
+    "expo": "~44.0.0",
+    "expo-status-bar": "~1.2.0",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-native": "0.64.3",
+    "react-native-maps": "0.29.4",
+    "react-native-safe-area-context": "3.3.2",
+    "react-native-screens": "~3.10.1",
+    "react-native-web": "0.17.1"
   },
   "devDependencies": {
-    "babel-preset-expo": "^8.3.0",
+    "@babel/core": "^7.12.9",
     "eslint": "^6.6.0",
     "eslint-config-handlebarlabs": "^0.0.4",
     "prettier": "^1.18.2"
