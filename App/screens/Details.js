@@ -10,7 +10,6 @@ import {
   Alert,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import NetInfo from "@react-native-community/netinfo";
 
 import { Button } from "../components/Button";
 import { geoFetch } from "../util/api";
@@ -60,25 +59,12 @@ class Details extends React.Component {
     loading: false,
     updatedItem: null,
     showMap: false,
-    offline: false,
   };
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
       this.setState({ showMap: true });
     });
-
-    this.netListenerUnsubscribe = NetInfo.addEventListener((networkState) => {
-      this.setState({
-        offline: !networkState.isConnected,
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    if (this.netListenerUnsubscribe) {
-      this.netListenerUnsubscribe();
-    }
   }
 
   handleLogPress = (_id) => {
@@ -136,7 +122,7 @@ class Details extends React.Component {
             <Button
               text="Log"
               onPress={() => this.handleLogPress(item._id)}
-              loading={this.state.loading || this.state.offline}
+              loading={this.state.loading}
             />
           </View>
         </ScrollView>
