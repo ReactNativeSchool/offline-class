@@ -6,7 +6,7 @@ import {
   Text,
   ScrollView,
   Dimensions,
-  InteractionManager
+  InteractionManager,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
@@ -18,7 +18,7 @@ const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5"
+    backgroundColor: "#F5F5F5",
   },
   section: {
     backgroundColor: "#fff",
@@ -28,19 +28,19 @@ const styles = StyleSheet.create({
     borderBottomColor: "#E4E4E4",
     marginVertical: 20,
     padding: 14,
-    alignItems: "center"
+    alignItems: "center",
   },
   titleText: {
     fontWeight: "600",
     fontSize: 18,
     color: "#4A4A4A",
     textAlign: "center",
-    marginBottom: 10
+    marginBottom: 10,
   },
   text: {
     fontSize: 16,
     color: "#4A4A4A",
-    marginBottom: 20
+    marginBottom: 20,
   },
   map: {
     width: screen.width,
@@ -49,15 +49,15 @@ const styles = StyleSheet.create({
     borderTopColor: "#E4E4E4",
     borderBottomWidth: 1,
     borderBottomColor: "#E4E4E4",
-    backgroundColor: "#fff"
-  }
+    backgroundColor: "#fff",
+  },
 });
 
 class Details extends React.Component {
   state = {
     loading: false,
     updatedItem: null,
-    showMap: false
+    showMap: false,
   };
 
   componentDidMount() {
@@ -66,13 +66,13 @@ class Details extends React.Component {
     });
   }
 
-  handleLogPress = _id => {
+  handleLogPress = (_id) => {
     this.setState({ loading: true }, () => {
       geoFetch(`/log-find?_id=${_id}`, { method: "PUT" })
-        .then(res => {
+        .then((res) => {
           this.setState({ updatedItem: res.result });
         })
-        .catch(error => {
+        .catch((error) => {
           console.log("log press error", error);
         })
         .finally(() => {
@@ -84,7 +84,7 @@ class Details extends React.Component {
   render() {
     const item = this.state.updatedItem
       ? this.state.updatedItem
-      : this.props.navigation.getParam("item", {});
+      : this.props?.route?.params?.item || {};
 
     return (
       <SafeAreaView style={styles.container}>
@@ -96,7 +96,7 @@ class Details extends React.Component {
                 latitude: item.latitude,
                 longitude: item.longitude,
                 latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421
+                longitudeDelta: 0.0421,
               }}
               zoomEnabled={false}
               scrollEnabled={false}
@@ -104,7 +104,7 @@ class Details extends React.Component {
               <Marker
                 coordinate={{
                   latitude: item.latitude,
-                  longitude: item.longitude
+                  longitude: item.longitude,
                 }}
               />
             </MapView>
