@@ -2,11 +2,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from "@react-native-community/netinfo";
 
 const BASE_URL = "https://rns-offline-class.glitch.me";
+const actionQueueKey = "CACHED_DATA::ACTION_QUEUE";
 
 export const geoFetch = async (path, options = {}, optimisticResponse = {}) => {
   const url = `${BASE_URL}/api${path}`;
   const cacheKey = `CACHED_DATA::${url}`;
-  const actionQueueKey = "CACHED_DATA::ACTION_QUEUE";
 
   try {
     const networkState = await NetInfo.fetch();
@@ -83,5 +83,48 @@ export const geoFetch = async (path, options = {}, optimisticResponse = {}) => {
   } catch (error) {
     console.log("geoFetch error", error);
     return Promise.reject(error);
+  }
+};
+
+const runRequests = async (actions) => {
+  const succeeded = [];
+  const failed = [];
+
+  for (let index = 0; index < actions.length; index += 1) {
+    const req = actions[index];
+    try {
+      const response = await geoFetch(req.path, req.options);
+      succeeded.push(response);
+    } catch (error) {
+      failed.push(req);
+    }
+  }
+
+  return {
+    succeeded,
+    failed,
+  };
+};
+
+export const reconcileActions = async () => {
+  const networkState = await NetInfo.fetch();
+
+  if (!networkState.isConnected) {
+    return false;
+  }
+
+  try {
+    const _queueActions = await AsyncStorage.getItem(actionQueueKey);
+    const queuedActions = _queueActions ? JSON.parse(_queueActions) : [];
+    const { failed } = await runRequests(queuedActions);
+
+    await AsyncStorage.setItem(actionQueueKey, JSON.stringify(failed));
+
+    const _queueActions2 = await AsyncStorage.getItem(actionQueueKey);
+    console.log("que", _queueActions2);
+    return true;
+  } catch (error) {
+    console.log("reconcileActions error", error);
+    return false;
   }
 };
